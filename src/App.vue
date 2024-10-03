@@ -52,6 +52,8 @@ async function listarPokemon() {
   // Mostrar elementos
   document.body.style.height = "auto";
   document.getElementById("cuerpo").style.display = "flex";
+  document.body.style.width = "100%";
+  document.body.style.height = "100vh";
   document.getElementById("header").style.display = "none";
   document.getElementById("nextcombat").style.display = "block";
   document.getElementById("resultadolocal").style.display = "block";
@@ -258,6 +260,7 @@ function reset() {
       <button id="resultadoglobal">{{ entrenadorganador }}</button>
       <button id="resetear" @click="reset()">RESET</button>
     </div>
+
   </div>
 </template>
 
@@ -268,6 +271,12 @@ body {
   background-image: url(./img/estadio.jpeg);
   background-position: center;
   background-size: cover;
+}
+#name1{
+color: white;
+}
+#name2{
+color: white;
 }
 
 .contador {
