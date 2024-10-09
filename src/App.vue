@@ -342,6 +342,7 @@ body {
   font-size: 50px;
   font-family: cursive;
   text-align:end;
+  color: rgb(94, 1, 1);
   
 }
 
