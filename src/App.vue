@@ -48,8 +48,26 @@ function numerospokedex() {
   }
 }
 
+function cambiarpantalla() {
+  document.body.style.height = "auto";
+  document.getElementById("cuerpo").style.display = "flex";
+  document.body.style.width = "100%";
+  document.body.style.height = "100vh";
+  document.getElementById("header").style.display = "none";
+  document.getElementById("nextcombat").style.display = "block";
+  document.getElementById("resultadolocal").style.display = "block";
+  document.getElementById("resultados").style.display = "flex";
+  document.getElementById("poke1").style.display = "flex";
+  document.getElementById("poke2").style.display = "flex";
+  document.getElementById("nextcombat").textContent = "FIGHT";
+  document.getElementById("resetear").style.display = "none";
+  document.getElementById("resultadoglobal").style.display = "none";
+}
 async function listarPokemon() {
   // Mostrar elementos
+   document.getElementById("vs").style.display = "block"
+  document.getElementById("imgpoke1").style.display = "block"
+  document.getElementById("imgpoke2").style.display = "block"
   document.body.style.height = "auto";
   document.getElementById("cuerpo").style.display = "flex";
   document.body.style.width = "100%";
@@ -78,7 +96,7 @@ async function listarPokemon() {
   if (i.value < numi.value) {
     const url1 = `https://pokeapi.co/api/v2/pokemon/${numeros1.value[i.value]}`;
     const url2 = `https://pokeapi.co/api/v2/pokemon/${numeros2.value[i.value]}`;
-    
+
     try {
       const { data } = await axios.get(url1);
       nombre.value = data.name;
@@ -170,8 +188,10 @@ function compararEstadisticas() {
 function finalizarCombate() {
   entrenadorganador.value = contador1.value > contador2.value ? "El Ganador es el Entrenador #1" :
     contador1.value < contador2.value ? "El Ganador es el Entrenador #2" : "EMPATE";
-  
+
   document.getElementById("nextcombat").textContent = "Resultado final";
+  document.getElementById("nextcombat").style.display = "none";
+  document.getElementById("resultadolocal").style.display = "none";
   document.getElementById("resultadoglobal").style.display = "block";
   document.getElementById("resetear").style.display = "block";
 }
@@ -192,7 +212,10 @@ function reset() {
   image2.value = "";
   numpokedex2.value = "";
   stats2.value = "";
-
+  pokeganador.value = ""
+  document.getElementById("vs").style.display = "none"
+  document.getElementById("imgpoke1").style.display = "none"
+  document.getElementById("imgpoke2").style.display = "none"
   document.getElementById("header").style.display = "flex";
   document.getElementById("iniciar").style.display = "block";
   document.getElementById("cuerpo").style.display = "none";
@@ -207,8 +230,9 @@ function reset() {
 <template>
   <div class="contenedor">
 
-    
+
     <div class="header" id="header">
+      <img src="./img/remove.png" alt="" id="imgpokebola">
       <select name="numpokemon" id="numpokemon">
         <option value="1">1</option>
         <option value="2">2</option>
@@ -217,10 +241,35 @@ function reset() {
         <option value="5">5</option>
         <option value="6">6</option>
       </select>
-      <button id="iniciar" @click="listarPokemon()">INICIAR</button>
+      <button id="iniciar" @click="cambiarpantalla()">INICIAR</button>
+
     </div>
-    
+
     <div class="cuerpo" id="cuerpo">
+
+      <div class="pokemon" id="poke1">
+        <div class="contador" id="contador">
+          <h1 class="txtcontador">{{ contador1 }}</h1>
+        </div>
+        <div class="contenedorname">
+          <div id="name1">{{ nombre }}</div>
+        </div>
+        <img :src="image" alt="" class="imgpoke" id="imgpoke1">
+      </div>
+      <div class="pokemon">
+        <img src="https://i.pinimg.com/originals/38/e6/8c/38e68c4baccbd17cc50aa752810a1301.gif" alt="" id="vs">
+      </div>
+      <div class="pokemon" id="poke2">
+        <div class="contador" id="contador2">
+          <h1 class="txtcontador">{{ contador2 }}</h1>
+        </div>
+        <div class="contenedorname">
+          <div id="name2">{{ nombre2 }}</div>
+        </div>
+        <img :src="image2" alt="" class="imgpoke" id="imgpoke2">
+      </div>
+    </div>
+    <div class="resultados" id="resultados">
       <div class="selecion">
         <select name="tipobatalla" id="batalla">
           <option value="total">TOTAL</option>
@@ -232,42 +281,26 @@ function reset() {
           <option value="speed">VELOCIDAD</option>
         </select>
       </div>
-      <div class="pokemon" id="poke1">
-        <div class="contador" id="contador">
-          <h1 class="txtcontador">{{ contador1 }}</h1>
-        </div>
-        <div class="contenedorname">
-          <div id="name1">{{ nombre }}</div>
-        </div>
-        <img :src="image" alt="" class="imgpoke">
-      </div>
-      <div class="pokemon">
-        <img src="https://i.pinimg.com/originals/38/e6/8c/38e68c4baccbd17cc50aa752810a1301.gif"
-          alt="" id="vs">
-      </div>
-      <div class="pokemon" id="poke2">
-        <div class="contador" id="contador2">
-          <h1 class="txtcontador">{{ contador2 }}</h1>
-        </div>
-        <div class="contenedorname">
-          <div id="name2">{{ nombre2 }}</div>
-        </div>
-        <img :src="image2" alt="" class="imgpoke">
-      </div>
-    </div>
-    <div class="resultados" id="resultados">
       <div class="btnnext">
-        <button id="nextcombat" @click="listarPokemon()">Siguiente Combate</button>
+
+        <button id="nextcombat" @click="listarPokemon()">Combate</button>
       </div>
       <button id="resultadolocal">{{ pokeganador }}</button> <br>
       <button id="resultadoglobal">{{ entrenadorganador }}</button>
+
       <button id="resetear" @click="reset()">RESET</button>
     </div>
+
 
   </div>
 </template>
 
 <style>
+#app {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   height: 100vh;
   width: 100%;
@@ -275,11 +308,13 @@ body {
   background-position: center;
   background-size: cover;
 }
-#name1{
-color: white;
+
+#name1 {
+  color: white;
 }
-#name2{
-color: white;
+
+#name2 {
+  color: white;
 }
 
 .contador {
@@ -288,9 +323,28 @@ color: white;
   justify-content: center;
   font-family: cursive;
 }
-.txtcontador {
-  font-family: cursive;
+#contador{
+  background-image: url(./img/player1.png);
+  background-position: center;
+  background-size: cover;
+  width: 120px;
+  height: 80px;
 }
+#contador2{
+  background-image: url(./img/player2.png);
+  background-position: center;
+  background-size: cover;
+  width: 120px;
+  height: 80px;
+}
+
+.txtcontador {
+  font-size: 50px;
+  font-family: cursive;
+  text-align:end;
+  
+}
+
 .contenedorname {
   display: flex;
   width: 100%;
@@ -298,6 +352,7 @@ color: white;
   justify-content: center;
   text-align: center;
 }
+
 .pokemon {
   align-items: center;
   justify-content: center;
@@ -305,8 +360,14 @@ color: white;
 }
 
 .contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   height: 100%;
   width: 100%;
+  padding: 0%;
+  margin: 0%;
 }
 
 .selecion {
@@ -316,23 +377,28 @@ color: white;
   justify-content: center;
 }
 
-#name1, #name2 {
+#name1,
+#name2 {
   font-family: cursive;
   background-color: black;
   border-radius: 50%;
   opacity: 0.7;
   width: 120px;
 }
+
 #vs {
+  display: none;
   height: 60px;
   width: 60px;
   opacity: 0.6;
 }
-#poke1{
+
+#poke1 {
   display: none;
   flex-direction: column;
 }
-#poke2{
+
+#poke2 {
   display: none;
   flex-direction: column;
 }
@@ -344,6 +410,7 @@ color: white;
   justify-content: center;
   flex-wrap: wrap;
 }
+
 .resultados {
   display: none;
   flex-direction: column;
@@ -354,7 +421,7 @@ color: white;
 
 .header {
   display: flex;
-  background-image: url(./img/);
+  background-image: url(https://i.pinimg.com/originals/9a/d8/e5/9ad8e5a396290ad68e26523220048512.gif);
   background-position: center;
   background-size: cover;
   width: 400px;
@@ -364,12 +431,23 @@ color: white;
   align-items: center;
 }
 
+#imgpokebola {
+  width: 150px;
+  height: 150px;
+}
+
 .imgpoke {
+  display: none;
   width: 260px;
   height: 260px;
 }
 
-#numpokemon, #batalla {
+#numpokemon {
+  width: 50px;
+  height: 20px;
+}
+
+#batalla {
   width: 100px;
   height: 20px;
 }
@@ -379,8 +457,12 @@ color: white;
   font-family: cursive;
 }
 
-#resetear {
-  display: none;
+#resetear:hover {
+  background: #318aac;
+  color: #7a0505 !important;
+  background: linear-gradient(to top, white, black);
+  transition: background 0.3s;
+
 }
 
 .btnnext {
@@ -396,17 +478,20 @@ color: white;
   }
 }
 
-#resultadolocal, #resultadoglobal {
+#resultadolocal,
+#resultadoglobal {
   display: none;
   font-family: cursive;
   background-color: black;
   color: white;
 }
+
 #iniciar:hover {
   background: #318aac;
-  color: #fff !important;
-  background: linear-gradient(to top, red,white, red);
+  color: #fbfafd !important;
+  background: linear-gradient(to right, rgba(246, 80, 52, 255), rgba(13, 17, 49, 255));
   transition: background 0.3s;
+
 
 }
 </style>
