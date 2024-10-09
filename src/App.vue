@@ -206,6 +206,8 @@ function reset() {
 
 <template>
   <div class="contenedor">
+
+    
     <div class="header" id="header">
       <select name="numpokemon" id="numpokemon">
         <option value="1">1</option>
@@ -217,6 +219,7 @@ function reset() {
       </select>
       <button id="iniciar" @click="listarPokemon()">INICIAR</button>
     </div>
+    
     <div class="cuerpo" id="cuerpo">
       <div class="selecion">
         <select name="tipobatalla" id="batalla">
@@ -351,6 +354,11 @@ color: white;
 
 .header {
   display: flex;
+  background-image: url(./img/);
+  background-position: center;
+  background-size: cover;
+  width: 400px;
+  height: 200px;
   justify-content: center;
   flex-direction: column;
   align-items: center;
@@ -393,5 +401,12 @@ color: white;
   font-family: cursive;
   background-color: black;
   color: white;
+}
+#iniciar:hover {
+  background: #318aac;
+  color: #fff !important;
+  background: linear-gradient(to top, red,white, red);
+  transition: background 0.3s;
+
 }
 </style>
