@@ -339,10 +339,10 @@ body {
 }
 
 .txtcontador {
-  font-size: 50px;
+  font-size: 70px;
   font-family: cursive;
   text-align:end;
-  color: rgb(94, 1, 1);
+  color: rgb(4, 245, 36);
   
 }
 
