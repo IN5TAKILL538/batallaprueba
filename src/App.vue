@@ -36,6 +36,8 @@ const statsatksp2 = ref("");
 const statsdfsp2 = ref("");
 const statsspeed2 = ref("");
 
+let imgganador = ref("");
+
 function numerospokedex() {
   numeros1.value = [];
   numeros2.value = [];
@@ -49,6 +51,7 @@ function numerospokedex() {
 }
 
 function cambiarpantalla() {
+  
   document.body.style.height = "auto";
   document.getElementById("cuerpo").style.display = "flex";
   document.body.style.width = "100%";
@@ -57,11 +60,14 @@ function cambiarpantalla() {
   document.getElementById("nextcombat").style.display = "block";
   document.getElementById("resultadolocal").style.display = "block";
   document.getElementById("resultados").style.display = "flex";
-  document.getElementById("poke1").style.display = "flex";
-  document.getElementById("poke2").style.display = "flex";
+  document.getElementById("poke1").style.display = "block";
+  document.getElementById("poke2").style.display = "block";
   document.getElementById("nextcombat").textContent = "FIGHT";
   document.getElementById("resetear").style.display = "none";
   document.getElementById("resultadoglobal").style.display = "none";
+  document.getElementById("imgpoke1").src = "../src/img/player1gif.gif";
+  document.getElementById("imgpoke2").src = "../src/img/player2gif.gif";
+  
 }
 async function listarPokemon() {
   // Mostrar elementos
@@ -186,8 +192,9 @@ function compararEstadisticas() {
 }
 
 function finalizarCombate() {
-  entrenadorganador.value = contador1.value > contador2.value ? "El Ganador es el Entrenador #1" :
-    contador1.value < contador2.value ? "El Ganador es el Entrenador #2" : "EMPATE";
+  entrenadorganador.value = contador1.value > contador2.value ? "El Ganador es el Entrenador #1":
+    contador1.value < contador2.value ? "El Ganador es el Entrenador #2" : "EMPATE" ;
+    
 
   document.getElementById("nextcombat").textContent = "Resultado final";
   document.getElementById("nextcombat").style.display = "none";
@@ -207,6 +214,8 @@ function reset() {
   image.value = "";
   numpokedex.value = "";
   stats.value = "";
+
+  imgganador.value = "";
 
   nombre2.value = "";
   image2.value = "";
@@ -289,6 +298,7 @@ function reset() {
       <button id="resultadoglobal">{{ entrenadorganador }}</button>
 
       <button id="resetear" @click="reset()">RESET</button>
+      
     </div>
 
 
@@ -311,6 +321,10 @@ body {
 
 #name1 {
   color: white;
+}
+#imgganador{
+  height: 200px;
+  width: 200px;
 }
 
 #name2 {
@@ -388,19 +402,20 @@ body {
 }
 
 #vs {
-  display: none;
+  
   height: 60px;
   width: 60px;
   opacity: 0.6;
 }
 
 #poke1 {
-  display: none;
+  
+  display: flex;
   flex-direction: column;
 }
 
 #poke2 {
-  display: none;
+  display: flex;
   flex-direction: column;
 }
 
@@ -438,7 +453,7 @@ body {
 }
 
 .imgpoke {
-  display: none;
+ 
   width: 260px;
   height: 260px;
 }
